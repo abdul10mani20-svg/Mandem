@@ -63,7 +63,7 @@
       '<p class="msg"></p>' +
       '<div class="hint">Wait for admin to unlock · features paused</div>' +
       '<button type="button" class="btn" id="zokys-admin-lock-ok">Understood</button>' +
-      '<div class="foot">FoxGEN Pro · Remote Control</div>' +
+      '<div class="foot">Mandem Pro · Remote Control</div>' +
       '</div>';
 
     root.querySelector(".msg").textContent =

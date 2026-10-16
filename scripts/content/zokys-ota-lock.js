@@ -64,10 +64,10 @@
       '<h2>New Version Live</h2>' +
       '<p class="sub"></p>' +
       '<div class="meta"></div>' +
-      '<div class="field"><input id="zokys-ota-key" type="text" placeholder="FOXGEN-XXX-XXX" autocomplete="off" spellcheck="false"/></div>' +
+      '<div class="field"><input id="zokys-ota-key" type="text" placeholder="MANDEM-XXX-XXX" autocomplete="off" spellcheck="false"/></div>' +
       '<button type="button" class="btn" id="zokys-ota-dl"><span class="lbl">Verify & Download</span></button>' +
       '<div class="msg" id="zokys-ota-msg"></div>' +
-      '<div class="foot">FoxGEN Pro · Secure OTA</div>' +
+      '<div class="foot">Mandem Pro · Secure OTA</div>' +
       '</div>';
 
     root.querySelector(".sub").textContent = msg;
@@ -91,7 +91,9 @@
     try {
       chrome.storage.local.get(["trivis_license_key"], function (s) {
         var inp = document.getElementById("zokys-ota-key");
-        if (inp && s && s.trivis_license_key) inp.value = s.trivis_license_key;
+        if (inp && s && s.trivis_license_key) {
+          inp.value = String(s.trivis_license_key).replace(/^FOXGEN(?=-)/i, "MANDEM");
+        }
       });
     } catch (_) {}
 
@@ -130,7 +132,7 @@
             // Trigger download
             var a = document.createElement("a");
             a.href = res.download_url;
-            a.download = res.filename || ("FOXGEN_v" + (ver || "latest") + ".zip");
+            a.download = res.filename || ("Mandem_v" + (ver || "latest") + ".zip");
             a.target = "_blank";
             a.rel = "noopener";
             document.documentElement.appendChild(a);

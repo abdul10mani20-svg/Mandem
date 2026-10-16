@@ -111,13 +111,13 @@
       "@keyframes vxShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}" +
       "</style>" +
       '<div class="wrap">' +
-        '<div class="logo-wrap"><div class="logo"><img alt="FoxGEN Pro" src="' +
+        '<div class="logo-wrap"><div class="logo"><img alt="Mandem Pro" src="' +
           (chrome.runtime.getURL ? chrome.runtime.getURL("assets/icon128.png") : "") +
         '"/></div></div>' +
-        '<h2>FoxGEN Pro</h2>' +
+        '<h2>Mandem Pro</h2>' +
         '<p class="sub">ENTER LICENSE KEY · any prefix</p>' +
         '<div class="field">' +
-          '<input id="zokys-gate-key" placeholder="FOXGEN-XXX-XXX" autocomplete="off" spellcheck="false"/>' +
+          '<input id="zokys-gate-key" placeholder="MANDEM-XXX-XXX" autocomplete="off" spellcheck="false"/>' +
           '<button type="button" class="copy" id="zokys-gate-paste" title="Paste">' + iconCopy + "</button>" +
         "</div>" +
         '<button type="button" class="btn" id="zokys-gate-btn">' +

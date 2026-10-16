@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "FoxGEN Pro",
+  "name": "Mandem Pro",
   "version": "6.10.0",
-  "description": "FoxGEN Pro 6.10 — premium Lovable assistant with FoxGEN license activation.",
-  "author": "FoxGEN",
+  "description": "Mandem Pro 6.10 — premium Lovable assistant with Mandem license activation.",
+  "author": "Mandem",
   "permissions": [
     "storage",
     "activeTab",
@@ -28,7 +28,7 @@
     "https://trivis.lovable.app/*"
   ],
   "action": {
-    "default_title": "FoxGEN Pro",
+    "default_title": "Mandem Pro",
     "default_popup": "index.html",
     "default_icon": {
       "16": "assets/icon16.png",

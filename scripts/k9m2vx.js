@@ -31,6 +31,9 @@ const OTA_DOWNLOAD_API_FALLBACK = ZOKYS_BASE + "/api/ota-download";
 /* Accept ZOKYS-XXXX-XXXX-XXXX and legacy TRIVIS-XXXX-XXXX */
 /* Custom prefix: PREFIX-XXXX-XXXX-XXXX */
 const KEY_RE = /^[A-Z0-9_]{2,24}(?:-[A-Z0-9]{2,16}){1,5}$/i;
+function toBackendLicenseKey(key) {
+  return String(key || "").replace(/^MANDEM(?=-)/i, "FOXGEN");
+}
 const TOKEN_KEY = "trivis_license_key";
 const OK_KEY = "trivis_lic_ok";
 const SESSION_KEY = "trivis_lic_session";
@@ -140,7 +143,7 @@ async function revalidateFromServer() {
     }
   }
 
-  const key = String(r[TOKEN_KEY]).trim().toUpperCase();
+  const key = toBackendLicenseKey(String(r[TOKEN_KEY]).trim().toUpperCase());
   if (!KEY_RE.test(key)) {
     await clearLicense();
     return { ok: false, reason: "bad_key" };
@@ -148,7 +151,7 @@ async function revalidateFromServer() {
 
   try {
     const dev = await deviceId();
-    const name = String(r[NAME_KEY] || "FoxGEN Pro User").slice(0, 64);
+    const name = String(r[NAME_KEY] || "Mandem Pro User").slice(0, 64);
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 12000);
     let resp;
@@ -461,7 +464,7 @@ async function executeAccountSwitch(inviteUrl) {
   if (!data) {
     return {
       ok: false,
-      error: "Invalid server response (" + lastStatus + "). Please try again or contact FoxGEN support"
+      error: "Invalid server response (" + lastStatus + "). Please try again or contact Mandem support"
     };
   }
 
@@ -744,10 +747,11 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     (async () => {
       try {
         const key = String(msg.key || "").trim().toUpperCase();
+        const backendKey = toBackendLicenseKey(key);
         const name = String(msg.name || "").trim().slice(0, 64);
         const dev = await deviceId();
-        if (!KEY_RE.test(key)) {
-          sendResponse({ ok: false, error: "Format: FOXGEN-XXX-XXX" });
+        if (!KEY_RE.test(backendKey)) {
+          sendResponse({ ok: false, error: "Format: MANDEM-XXX-XXX" });
           return;
         }
         const ctrl = new AbortController();
@@ -757,7 +761,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
           resp = await fetch(TRIVIS_API, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ licenseKey: key, key, deviceId: dev, device_id: dev, name }),
+            body: JSON.stringify({ licenseKey: backendKey, key: backendKey, deviceId: dev, device_id: dev, name }),
             signal: ctrl.signal
           });
         } finally {
@@ -769,7 +773,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
             const resp2 = await fetch(TRIVIS_API_FALLBACK, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ licenseKey: key, key, deviceId: dev, device_id: dev, name })
+              body: JSON.stringify({ licenseKey: backendKey, key: backendKey, deviceId: dev, device_id: dev, name })
             });
             const data2 = await resp2.json().catch(() => null);
             if (data2 && data2.ok) data = data2;
@@ -784,13 +788,13 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
           return;
         }
         const patch = {
-          [TOKEN_KEY]: key,
+          [TOKEN_KEY]: backendKey,
           zokys_max_devices: data.max_devices || data.maxDevices || null,
           zokys_max_switches: data.max_switches || data.switch_limit || data.maxSwitches || null,
           zokys_switch_limit: data.switch_limit || data.max_switches || null,
           [OK_KEY]: true,
           [SESSION_KEY]: data.session || "sess_" + Date.now(),
-          [NAME_KEY]: data.user_name || name || "FoxGEN Pro User",
+          [NAME_KEY]: data.user_name || name || "Mandem Pro User",
           [LAST_CHECK_KEY]: Date.now()
         };
         if (data.expires_at) patch[EXP_KEY] = data.expires_at;
@@ -1348,10 +1352,10 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
 
 
-  if (msg.type === "ZOKYS_OTA_DOWNLOAD") {
+  if (msg.type === "ZOKYS_OTA_DOWNLOAD" || msg.type === "FOXGEN_OTA_DOWNLOAD") {
     (async () => {
       try {
-        const key = String(msg.key || "").trim();
+        const key = toBackendLicenseKey(String(msg.key || "").trim());
         if (!key) {
           sendResponse({ ok: false, error: "Enter license key" });
           return;

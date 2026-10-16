@@ -176,7 +176,7 @@
     // map old titles to rocket flavour
     if (/sending/i.test(t)) t = "Ignition sequence";
     if (/loading method/i.test(t)) t = "Fueling engines";
-    if (/zokys/i.test(s)) s = s.replace(/FoxGEN Pro/gi, "FoxGEN Pro");
+    if (/zokys/i.test(s)) s = s.replace(/FoxGEN Pro/gi, "Mandem Pro");
     if (/securing send/i.test(s)) s = "Verifying license · arming systems";
     if (/secure fetch/i.test(s)) s = "Secure uplink · loading payload";
 

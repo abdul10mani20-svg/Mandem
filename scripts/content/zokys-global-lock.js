@@ -109,7 +109,7 @@
       '<div class="zk-n-orb a"></div><div class="zk-n-orb b"></div>' +
       '<div class="zk-n-icon">🔒</div>' +
       '<div class="zk-n-title">EXTENSION LOCKED</div>' +
-      '<div class="zk-n-sub">FoxGEN Pro · Global Lock</div>' +
+      '<div class="zk-n-sub">Mandem Pro · Global Lock</div>' +
       '<div class="zk-n-msg"></div>' +
       '<button type="button" class="zk-n-btn" id="zokys-lock-ok">Got it</button>' +
       "</div>";

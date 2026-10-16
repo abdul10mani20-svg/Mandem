@@ -75,7 +75,7 @@
     pop.innerHTML =
       '<div class="cd-card" role="dialog" aria-modal="true">' +
       '<button type="button" class="cd-x" aria-label="Close">×</button>' +
-      '<div class="cd-badge">FoxGEN Pro · cooldown</div>' +
+      '<div class="cd-badge">Mandem Pro · cooldown</div>' +
       '<div class="cd-title">Prompt limit reached</div>' +
       '<p class="cd-body">You have used your 1-prompt window. Please wait for the cooldown to finish before sending another prompt. Remaining time is shown below.</p>' +
       '<div class="cd-time" id="zokys-cd-time">0:00</div>' +

@@ -26,7 +26,7 @@
         if (el.querySelector && el.querySelector('[class*="file"],[class*="attach"],[class*="chip"]')) continue;
         /* Hide only pure text dummies */
         var isDummy =
-          /Send by FoxGEN Pro|Send by REMAX|completetxt\.task|readtxt&complete|Read txt file and complete task/i.test(t) ||
+          /Send by (?:FoxGEN|Mandem) Pro|Send by REMAX|completetxt\.task|readtxt&complete|Read txt file and complete task/i.test(t) ||
           /\[BUILD MODE|\[PLAN MODE/i.test(t) ||
           /^prompt\.intxt$/i.test(t);
         if (isDummy && t.length < 220) {

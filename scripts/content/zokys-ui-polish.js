@@ -39,7 +39,7 @@
       if (!wrap.querySelector(".zokys-pro-badge")) {
         var b = document.createElement("div");
         b.className = "zokys-pro-badge";
-        b.textContent = "FoxGEN Pro";
+        b.textContent = "Mandem Pro";
         wrap.appendChild(b);
       }
     } catch (e) {}

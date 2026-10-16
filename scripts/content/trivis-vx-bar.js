@@ -33,7 +33,7 @@
       license: "LICENSE", time: "TIME REMAINING", status: "STATUS", sync: "PROJECT SYNC",
       syncOk: "Project successfully synced", syncNo: "Project not synced",
       shop: "Shop", support: "Support", valid: "Valid", expired: "Expired", none: "No license",
-      logout: "Logout", copy: "Copy", connected: "Connected", appTitle: "FoxGEN Pro",
+      logout: "Logout", copy: "Copy", connected: "Connected", appTitle: "Mandem Pro",
       appDesc: "License hub, points & extension tools. Android app coming soon.",
       download: "Download App", demo: "Demo — app not released yet", buy: "Buy now",
       follow: "Follow", join: "Join server", subscribe: "Subscribe", joinTg: "Join now"
@@ -1806,6 +1806,10 @@
     }
   }
 
+  function displayLicenseKey(key) {
+    return String(key || "").replace(/^FOXGEN(?=-)/i, "MANDEM");
+  }
+
   function getLicense(cb) {
     try {
       chrome.runtime.sendMessage({ type: "TRIVIS_STATUS" }, function (r) {
@@ -1821,7 +1825,7 @@
                 else if (exp) left = formatLeft(exp - Date.now());
               }
             }
-            cb({ ok, key: s && s.trivis_license_key, status, left });
+            cb({ ok, key: displayLicenseKey(s && s.trivis_license_key), status, left });
           });
           return;
         }
@@ -1831,7 +1835,7 @@
           if (exp && Date.now() > exp) status = t("expired");
           else if (exp) left = formatLeft(exp - Date.now());
         }
-        cb({ ok: !!r.ok, key: r.key, status, left });
+        cb({ ok: !!r.ok, key: displayLicenseKey(r.key), status, left });
       });
     } catch (_) {
       cb({ ok: false, key: null, status: t("none"), left: "—" });
@@ -2107,7 +2111,7 @@
       '</style>',
       '<div class="zk-sw-card">',
       '<div class="zk-sw-orb a"></div><div class="zk-sw-orb b"></div>',
-      '<div class="zk-sw-badge"><span class="z">FoxGEN Pro</span><span class="t"></span></div>',
+          '<div class="zk-sw-badge"><span class="z">Mandem Pro</span><span class="t"></span></div>',
       '<h3>Account Switch</h3>',
       '<div class="zk-sw-sub">Fresh pool account · 0 credits · max 2 / day. Invite link optional — project continue after login.</div>',
       '<button type="button" class="zk-sw-back" id="zk-sw-back-main">↩ Back to your main account</button>',
@@ -2300,7 +2304,7 @@
     try {
       if (typeof window.__zokysChatSendTxt === "function") {
         window.__zokysChatSendTxt(text, { mode: "build", autoSend: true, showLoader: true });
-        toast("Sending via FoxGEN Pro Chat…");
+        toast("Sending via Mandem Pro Chat…");
         return;
       }
     } catch (e) {}
@@ -2315,7 +2319,7 @@
     setBody(
       '<div class="zk-dev-box">' +
         '<div class="zk-dev-badge"><span class="glow-dot"></span><span>SYSTEM MODULE</span></div>' +
-        '<div class="zk-dev-title">FoxGEN Pro TOOLS</div>' +
+        '<div class="zk-dev-title">Mandem Pro TOOLS</div>' +
         '<div class="zk-dev-sub">Intelligent automation & swift bypasses</div>' +
       '</div>' +
       '<div class="vx-feat-card">' +
@@ -2601,7 +2605,7 @@
         '<div class="zk-welcome-orb zk-welcome-orb-a"></div>' +
         '<div class="zk-welcome-orb zk-welcome-orb-b"></div>' +
         '<div class="zk-welcome-inner">' +
-          '<div class="zk-welcome-badge"><span class="z">FoxGEN Pro</span><span class="t"></span></div>' +
+          '<div class="zk-welcome-badge"><span class="z">Mandem Pro</span><span class="t"></span></div>' +
           '<div class="zk-welcome-title">Welcome back</div>' +
           '<div class="zk-welcome-line"></div>' +
           '<div class="zk-welcome-text">' +
@@ -2632,27 +2636,6 @@
     if (btn) btn.onclick = function () {
       showLicense();
     };
-    var socYt = bodyEl.querySelector("#zk-soc-youtube");
-    if (socYt) {
-      socYt.onclick = function () {
-        window.open(LINKS.youtube || "https://youtube.com/@zokysx", "_blank", "noopener");
-        toast("YouTube ↗");
-      };
-    }
-    var socTelegram = bodyEl.querySelector("#zk-soc-telegram");
-    if (socTelegram) {
-      socTelegram.onclick = function () {
-        window.open(LINKS.telegram, "_blank", "noopener");
-        toast("Telegram Channel ↗");
-      };
-    }
-    var socInstagram = bodyEl.querySelector("#zk-soc-instagram");
-    if (socInstagram) {
-      socInstagram.onclick = function () {
-        window.open(LINKS.instagram, "_blank", "noopener");
-        toast("Instagram Channel ↗");
-      };
-    }
   }
 
   function showLicense() {
@@ -2701,7 +2684,7 @@
             '<button class="vx-btn ghost" id="vx-account-switch">' + svg("userEdit") + '<span>Account Switch</span></button>' +
             '<button class="vx-btn ghost" id="vx-logout">' + svg("logout") + '<span>' + t("logout") + '</span></button>' +
           '</div>' +
-          '<div class="vx-foot"><span>FoxGEN Pro · Next-Gen Interface</span></div>'
+          '<div class="vx-foot"><span>Mandem Pro · Next-Gen Interface</span></div>'
         );
 
         var copyBtn = bodyEl.querySelector("#vx-copy");
@@ -2795,7 +2778,7 @@
       '<div class="zk-dev-box">' +
         '<div class="zk-dev-badge"><span class="glow-dot"></span><span>COMMUNITY HUB</span></div>' +
         '<div class="zk-dev-title">CONNECT WITH US</div>' +
-        '<div class="zk-dev-sub">Official FoxGEN Pro networks & support</div>' +
+        '<div class="zk-dev-sub">Official Mandem Pro networks & support</div>' +
       '</div>' +
       '<div class="zk-welcome-hints">' +
         '<div class="zk-soc-card zk-soc-telegram" data-open="youtube">' +
@@ -2815,17 +2798,6 @@
         '</div>' +
       '</div>'
     );
-    bodyEl.querySelectorAll(".zk-soc-card[data-open]").forEach(function (btn) {
-      btn.onclick = function () {
-        var k = btn.getAttribute("data-open");
-        var url = LINKS[k];
-        if (url) {
-          window.open(url, "_blank", "noopener");
-          var name = k === "youtube" ? "YouTube" : k === "telegram" ? "Telegram" : "Instagram";
-          toast(name + " ↗");
-        }
-      };
-    });
   }
 
 
@@ -2879,7 +2851,7 @@
 
     setBody(
       '<div class="zk-lb zk-glass">' +
-        '<div class="zk-lb-title"><span>FoxGEN Pro</span> <span class="heart">♥</span> <span class="zk-dev-badge" style="margin-left:auto;font-size:9px"><span class="glow-dot"></span>AI ENGINE</span></div>' +
+        '<div class="zk-lb-title"><span>Mandem Pro</span> <span class="heart">♥</span> <span class="zk-dev-badge" style="margin-left:auto;font-size:9px"><span class="glow-dot"></span>AI ENGINE</span></div>' +
         '<p class="zk-lb-desc">Ship prompts as a secure task file. Lovable reads the file and finishes the job — stable, clean, automatic.</p>' +
         '<div class="zk-lb-box zk-glass-panel">' +
           '<textarea id="vx-chat-input" class="zk-lb-input" rows="3" placeholder="Ask Lovable anything…"></textarea>' +
@@ -3210,12 +3182,6 @@
         );
       }).join("")
     );
-    bodyEl.querySelectorAll(".zk-buy").forEach(function (btn) {
-      btn.onclick = function () {
-        window.open(LINKS.telegram || "https://t.me/foxgenofficial", "_blank", "noopener");
-        toast("Telegram · " + btn.getAttribute("data-id"));
-      };
-    });
   }
 
 
@@ -3324,7 +3290,7 @@
     // Order: V7 | lang | social | download | theme | key | expand(end)
     panel.innerHTML = `
       <div id="zokys-vx-header">
-        <span class="vx-brand vx-brand-icon" data-act="welcome" title="FoxGEN Pro Home" style="cursor:pointer"><img src="${(function(){try{return chrome.runtime.getURL("assets/icon48.png")}catch(e){return ""}})()}" alt="FoxGEN Pro" width="22" height="22" style="border-radius:7px;display:block;box-shadow:0 0 12px rgba(249,115,22,.45)"/></span>
+        <span class="vx-brand vx-brand-icon" data-act="welcome" title="Mandem Pro Home" style="cursor:pointer"><img src="${(function(){try{return chrome.runtime.getURL("assets/icon48.png")}catch(e){return ""}})()}" alt="Mandem Pro" width="22" height="22" style="border-radius:7px;display:block;box-shadow:0 0 12px rgba(249,115,22,.45)"/></span>
         <button class="vx-ibtn" data-act="lang" title="Language">${svg("lang")}</button>
                 <button class="vx-ibtn" data-act="shield" title="AntiProtect">${svg("shield")}</button>
         <button class="vx-ibtn" data-act="features" title="Features">${svg("features")}</button>
@@ -3385,7 +3351,7 @@
             showWelcome();
           } catch (err) {
             try { console.warn(err); } catch (_) {}
-            setBody('<div class="zk-welcome-title">Welcome</div><div class="zk-welcome-text">FoxGEN Pro is ready.</div>');
+            setBody('<div class="zk-welcome-title">Welcome</div><div class="zk-welcome-text">Mandem Pro is ready.</div>');
           }
         }
       } else if (a === "shield") showAntiProtect();
